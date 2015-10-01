@@ -59,6 +59,7 @@ void CCPUInfoUIHandler::updateScreen()
     }
 
     handleNoData(false);
+    uint count = mCPUInfoServer->getCoreCount();
 
     //go through the data list and populate.
     //handles button states for end of page scenarios
@@ -87,7 +88,8 @@ void CCPUInfoUIHandler::updateScreen()
                Q_RETURN_ARG(QVariant, returnedValue),
                Q_ARG(QVariant, pair.first),
                Q_ARG(QVariant, pair.second),
-               Q_ARG(QVariant, i));
+               Q_ARG(QVariant, i),
+               Q_ARG(QVariant, data.count()));
     }
 
     //Check Index bounds. Handles 1 core or more
@@ -96,12 +98,12 @@ void CCPUInfoUIHandler::updateScreen()
         showHideButton(QString("left"), false);
     }
 
-    if (mIndex == mCPUInfoServer->getCoreCount())
+    if (mIndex == count)
     {
         showHideButton("right", false);
     }
 
-    if (mIndex > LOWERBOUND && mIndex < mCPUInfoServer->getCoreCount())
+    if (mIndex > LOWERBOUND && mIndex < count)
     {
         showHideButton("left", true);
         showHideButton("right", true);

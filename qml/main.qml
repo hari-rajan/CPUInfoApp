@@ -32,10 +32,24 @@ Window {
       * Function that updates the list elements. Call from
       * C++ with key, value, and element position
       */
-    function updateList(key, value, location)
+    function updateList(key, value, location, count)
     {
         listviewId.model.setProperty(location, "key", key);
         listviewId.model.setProperty(location, "value", value);
+        var listcount = listviewId.count;
+
+        var diff = listcount - count;
+        console.log("updatelist " + diff);
+
+        //remove extra listelements
+        if (diff > 0)
+        {
+            while (listviewId.count - count > 0)
+            {
+                console.log (listviewId.count - count);
+                listviewId.model.remove(listviewId.count-1, 1);
+            }
+        }
     }
 
     /**
